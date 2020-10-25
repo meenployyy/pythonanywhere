@@ -1,0 +1,74 @@
+{% extends 'myweb/base.html' %}
+{% block title %}ข้อมูล cafe: {{ cafe.name }}{% endblock %}
+{% block content %}
+<!--
+    Header start 
+	============================== -->
+<nav id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="/">
+                                    <h1>Ma Tieow Kan</h1>
+                                </a>
+
+                            </div>
+
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="#about-us">about us</a></li>
+                                    {% if cafes %}<li><a href="#blog">Cafe</a></li>{% endif %}
+                                    {% if user.is_anonymous %}
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'signup' %}">Signup</a></li>
+                                    {% else %}
+                                    <li><a href="#contact-us">contacts</a></li>
+                                    <li><a href="{% url 'search' %}">Search</a></li>
+                                    <li><a>สวัสดี {{ user }}!!</a></li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                    </nav>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .container close -->
+</nav><!-- header close -->
+<!--
+    about-us start
+    ============================== -->
+<section id="about-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <img class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="400ms"
+                        src="/media/{{ cafe.img }}" alt="cooker-img" width="400" height="280">
+                    <h1 class="heading wow fadeInUp" data-wow-duration="400ms" data-wow-delay="500ms">
+                        <span>{{ cafe.name }}</span>
+                    </h1>
+                    <p class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="600ms">{{ cafe.desc }}</p>
+                    <p class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="600ms">จังหวัด:  {{ cafe.province }}</p>
+                    <p class="wow fadeInUp" data-wow-duration="300ms" data-wow-delay="600ms">ที่อยู่:  {{ cafe.address }}</p>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #call-to-action close -->
+{% endblock %}

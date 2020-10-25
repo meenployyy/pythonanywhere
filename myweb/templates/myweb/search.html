@@ -1,0 +1,106 @@
+{% extends 'myweb/base.html' %}
+{% block title %}ค้นหา{% endblock %}
+{% block content %}
+<!--
+    Header start 
+	============================== -->
+<nav id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand" href="/">
+                                    <h1>Ma Tieow Kan</h1>
+                                </a>
+
+                            </div>
+
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="#about-us">about us</a></li>
+                                    {% if cafes %}<li><a href="#blog">Cafe</a></li>{% endif %}
+                                    {% if user.is_anonymous %}
+                                    <li><a href="{% url 'login' %}">Login</a></li>
+                                    <li><a href="{% url 'signup' %}">Signup</a></li>
+                                    {% else %}
+                                    <li><a href="#contact-us">contacts</a></li>
+                                    <li><a href="{% url 'search' %}">Search</a></li>
+                                    <li><a>สวัสดี {{ user }}!!</a></li>
+                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                    </nav>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .container close -->
+</nav><!-- header close -->
+<!--
+    about-us start
+    ============================== -->
+<section id="about-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h2>เลือกจังหวัด</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <select name="province">
+                            {% for i in provinces %}
+                            <option value="{{ i.name }}">{{ i.name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="ค้นหา">
+                    </form>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #call-to-action close -->
+{% if cafes %}
+<!--
+    blog start
+    ============================ -->
+<section id="blog">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block">
+                    <h1 class="heading">ผลการ <span>ค้นหา</span></h1>
+                    <ul>
+                        {% for i in cafes %}
+                        <li class="wow fadeInLeft" data-wow-duration="300ms" data-wow-delay="300ms">
+                            <div class="blog-img">
+                                <img src="media/{{ i.img }}" alt="blog-img" width="293" height="220">
+                            </div>
+                            <div class="content-right">
+                                <a href="/cafe/{{ i.id }}"><h3>{{ i.name }}</h3></a>
+                                <p>{{ i.desc }}
+                                </p>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div><!-- .col-md-12 close -->
+        </div><!-- .row close -->
+    </div><!-- .containe close -->
+</section><!-- #blog close -->
+{% endif %}
+{% endblock %}
