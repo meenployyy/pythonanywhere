@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(req):
     cafe = Cafe.objects.all().order_by('?')[:6] # สุ่มมา 6 อัน
+    for i in cafe:
+        i.desc = i.desc[:80]
     context = {
         'cafes': cafe
     }
@@ -48,6 +50,8 @@ def search(req):
     if req.method == "POST":
         keyword = req.POST.get('province')
         cafes = Cafe.objects.filter(province__name=keyword)
+        for i in cafes:
+            i.desc = i.desc[:80]
         return render(req, 'myweb/search.html', {'provinces':province, 'cafes':cafes})
     else:
         return render(req, 'myweb/search.html', {'provinces':province})
